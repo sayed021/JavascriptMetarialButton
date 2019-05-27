@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		button {
+			width: 300px;
+			height: 50px;
+		}
+		[data-metarialbutton],
+		[metarialbutton] {
+			outline: 0;
+			border: 0;
+			cursor: pointer;
+			overflow: hidden;
+			position: relative;
+		}
+		[data-metarialbutton] .overlay,
+		[metarialbutton] .overlay {
+			position: absolute;
+			width: 0;
+			height: 0;
+			background: red;
+			z-index: 1;
+			transition: 0.3s;
+			opacity: 0.2;
+			border-radius: 100%;
+		}
+		[data-metarialbutton] .overlay.animated,
+		[metarialbutton] .overlay.animated {
+			transform: scale(10);
+		}
+	</style>
+</head>
+<body>
+
+	<div metarialbutton style="position: fixed; width: 100%; height: 100%; background: #eee;">
+		
+	</div>
+
+	<button  metarialbutton>click me 1!</button>
+	<button data-metarialbutton>click me 2!</button>
+
+
+	<script src="http://code.jquery.com/jquery-3.3.1.min.js"integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+	<script>
+		jQuery(document).ready(function() {
+			jQuery(document).on('click', '[data-metarialbutton] , [metarialbutton]', function(e) {
+				e.preventDefault();
+				$(this).append('<scpan class="overlay" style="left:'+event.offsetX  +'px; top:'+event.offsetY+'px;"></span>');
+
+				$(this).find('.overlay').addClass('animated');
+				$(this).find('.overlay').animate({
+					width: $(this).width(),
+					height: $(this).width(),
+					opacity: 0
+				}, 300, function() {
+					var thisElement = $(this);
+					setTimeout(function(){
+						thisElement.remove();
+					},200);
+				});
+			});
+		});
+	</script>
+
+</body>
+</html>
